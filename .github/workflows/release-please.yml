@@ -14,6 +14,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: google-github-actions/release-please-action@v3
+        id: release-please
         with:
           release-type: node
           command: manifest
+
+      - env:
+          RELEASE_PLEASE_RELEASES_CREATED: ${{ steps.release-please.outputs.releases_created }}
+          RELEASE_PLEASE_PATHS_RELEASED: ${{ steps.release-please.outputs.paths_released }}
+          RELEASE_PLEASE_PR: ${{ steps.release-please.outputs.pr }}
+          RELEASE_PLEASE_PRS: ${{ steps.release-please.outputs.prs }}
+        run: |
+          echo RELEASE_PLEASE_RELEASES_CREATED="$RELEASE_PLEASE_RELEASES_CREATED"
+          echo RELEASE_PLEASE_PATHS_RELEASED="$RELEASE_PLEASE_PATHS_RELEASED"
+          echo RELEASE_PLEASE_PR="$RELEASE_PLEASE_PR"
+          echo RELEASE_PLEASE_PRS="$RELEASE_PLEASE_PRS"
+
+
